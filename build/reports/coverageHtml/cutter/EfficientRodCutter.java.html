@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>EfficientRodCutter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">assign4</a> &gt; <a href="index.source.html" class="el_package">cutter</a> &gt; <span class="el_source">EfficientRodCutter.java</span></div><h1>EfficientRodCutter.java</h1><pre class="source lang-java linenums">package cutter;
+
+import java.util.*;
+import java.util.AbstractMap.*;
+import java.util.Map;
+
+public class EfficientRodCutter extends RodCutter{
+
+    private Map&lt;Integer, List&lt;Integer&gt;&gt; cutPatterns;
+    private Map&lt;Integer, Integer&gt; maxPriceForLength;
+
+    public EfficientRodCutter(Map&lt;Integer, Integer&gt; lengthAndPrice) {
+
+<span class="fc" id="L14">        super(lengthAndPrice);</span>
+<span class="fc" id="L15">        this.cutPatterns = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L16">        this.maxPriceForLength = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L17">    }</span>
+
+    public SimpleEntry&lt;Integer, List&lt;Integer&gt;&gt; cutRod(int length){
+
+        SimpleEntry&lt;Integer, List&lt;Integer&gt;&gt; maxPriceAndCut;
+
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        if(maxPriceForLength.containsKey(length)){</span>
+<span class="fc" id="L24">            maxPriceAndCut = new SimpleEntry&lt;&gt;(maxPriceForLength.get(length), cutPatterns.get(length));</span>
+        }
+        else{
+<span class="fc" id="L27">            maxPriceAndCut = super.cutRod(length);</span>
+<span class="fc" id="L28">            cutPatterns.put(length,maxPriceAndCut.getValue());</span>
+<span class="fc" id="L29">            maxPriceForLength.put(length, maxPriceAndCut.getKey());</span>
+        }
+
+<span class="fc" id="L32">        return maxPriceAndCut;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

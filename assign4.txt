@@ -1,0 +1,94 @@
+Assign 4: Due 11:59PM November 18th
+
+A company is in the business of buying rods in wholesale, cutting it, and
+selling the pieces in the retail market. The market fluctuates and the price 
+for different sizes of rods changes by the day. Here's where we come in, the
+company wants our help to know how much maximum money they can make, and how 
+to cut the rods of a given length to get that maximum money.
+
+For example, if the rods of various lengths sell at the following prices on
+a given day:
+
+Inch   price
+1       $1
+2       $1
+3       $2
+4       $3
+5       $4
+6       $5
+7       $5
+8       $9
+9       $9
+10      $10
+
+Cutting a 20 inches rod into ten pieces of 2 inches each will only get them 
+$10. However, if they cut it into 6 pieces of two 8-inches, and four 1-inches
+will get them $22. There may be other combinations that produce better price.
+The additional challenge is the prices fluctuate each day.
+
+We're asked to write a program, but in a way the algorithm for computing
+the sizes can be changed.
+
+Write a class RodCutter that will take the various lengths and their prices.
+Then write one method on the class, cutRod that takes a length as parameter
+and returns two things - maximum price the company can expect and the
+size of the rods that they should cut the given length to get that price.
+For example, if the input parameter is 2 (and the prices are as above),
+then the output will be $2 and the sizes will be 1, 1 (for 2 pieces).
+
+First write the class RodCutter so it works with a simple algorithm.
+Then (and only after fully completing the above, not before), create another
+version of RodCutter that will use techniques to shorten the
+time to compute the result. The two versions must produce the same result,
+just their computations efficiencies must be different.
+
+Write a test to verify that the time taken by the second implementation is at least an order of magnitude faster than the first solution.
+
+After you complete the program, answer the following questions:
+
+1. What design principles did you use in this program. Explain each
+and specify the classes that participated.
+
+	In this program, we primarily applied DRY, SRP, LSP, and OCP principles. 
+
+	- The principle of DRY stands for Don't Repeat Yourself, which states that "Every piece of knowledge must have a single, unambiguous, authoritative
+	representation within a system [1]." Violation of DRY principle will result in poor maintainability and increasing the expense to fix bugs and errors. Several classes in our program follow this principle. 
+
+	In our program, the EfficientRodCutter follows DRY principle. This cutter was implemented using dynamic programming technique with memoization. It still uses the recursive algorithm similar to the one in RodCutter. However, in order to increase computing speed, we recorded the cut pattern and maximum price for a given rod length if it has been checked before (during the recursive call). If the length has been checked before, it will simply return the price and cut patterns available in the cutPatterns map and the maxPriceForLength map. If not, it will follow the steps in CutRod method in RodCutter. In order to avoid duplication of code and effort, we extend EfficientRodCutter from RodCutter. 
+
+	Similarly, The EfficientRodCutterTest also extends from CutterTest, because the tests are essentially identical, the only difference is the cutter.
+
+
+	- LSP stands for Liskovs Substitution Principle, which means that objects of a derived class should always be able to replace the objects of a base class. In other words, do not use inheritance if it can't substitute. In our case, EfficientRodCutter derives from RodCutter, and anywhere a RodCutter object is used, we can replace it with an instance of EfficientRodCutter. For example, in ComparisonTest, the method caculateTime takes a RodCutter object as input. In the test, we could use either an object of RodCutter or an object of EfficientCutter as input to get the computation time. Violation of LSP will result in violating OCP.
+
+
+	- The SRP principle stands for Single Responsibility, which states that "states that every module or class should have responsibility over a single part of the functionality provided by the software, and that responsibility should be entirely encapsulated by the class [2]." In other words, if you need to change a class, there should only be one reason. Following SRP principle will make the class more robust. 
+
+	Both EfficientRodCutter and RodCutter follow this principle - each of them has only one goal, which is compute the optimal cuts and the best price from the cuts. It's mainly because there is no other requirement from this assignment. But if we were asked to do more work with the result, such as print it out, we will implement another class call PrintResult which will take the output from the cutter as input. In this way, each class will only be responsible for one thing.
+
+	In addition, the fact that ComparisonTest, RodCutterTest and EfficientCutterTest are separated from each other, is another example of following SRP.
+
+	- The OPC stands for open/closed principle, which means that a class should be open for extension but closed for modification. In our case, the RodCutter is closed for modification but open for extension. For example, when we need to implement EfficientCutter, it simply takes advantage of existing RodCutter and adds a few checking statements before calling the cutRod method. In this way it enhances the computing speed significantly, but the base class remains unchanged. 
+
+
+2. What design patterns did you use in this program. Explain each
+and specify the classes that participated.
+	
+	- We've used Factory method, Cascade Method pattern and Iterator patten in this program. 
+
+	- Factory method is a design pattern that lets a class defer instantiation to subclass. We used this pattern in multiple places in our program. Most of them are provided by Java. For example, we often declare an object using an interface, such as Map<Integer, List<Integer>>. In this case,both the List and Map are an interfaces. The actual instantiation of the object is left to the method in which the object will be used. The advantage of using Factory method is that it isolates creation of concrete classes, which makes exchanging of products families easy.
+
+
+	- Cascade method is a pattern that chains multiple method calls in a single statement. Each method in the cascade returns an object, that will be passed to the next chained method. We used this pattern in the step of searching for maximum price from different splitting points in cutRod method in RodCutter class. In this method call, we chained the action of looping, map to object and get maximum value together. By doing so, the code becomes less noisy and more fluent. 
+  
+
+	- Iterator patten provides a way to access the elements of a collection sequentially without exposing its underlying representations. For example, we use IntStream.range to iterate through the results obtained by splitting the rod into half at different positions to get the maximum price in cutRod method in RodCutter. By using iterator pattern with the Stream API, we don't need to worry about what type of data type we are dealing with. It follows the OCP principle.
+
+	
+
+
+
+Reference:
+1. https://en.wikipedia.org/wiki/Don't_repeat_yourself
+2. https://en.wikipedia.org/wiki/Single_responsibility_principle
+

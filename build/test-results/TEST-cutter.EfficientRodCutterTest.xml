@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cutter.EfficientRodCutterTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2016-11-18T17:10:15" hostname="LAPTOP-48JFAUP7" time="0.013">
+  <properties/>
+  <testcase name="canary" classname="cutter.EfficientRodCutterTest" time="0.0"/>
+  <testcase name="checkCutRodWhenLengthIs0" classname="cutter.EfficientRodCutterTest" time="0.0"/>
+  <testcase name="checkCutRodWhenLengthIs1" classname="cutter.EfficientRodCutterTest" time="0.0"/>
+  <testcase name="checkCutRodWhenLengthIs2" classname="cutter.EfficientRodCutterTest" time="0.001"/>
+  <testcase name="checkCutRodWhenLengthIs3" classname="cutter.EfficientRodCutterTest" time="0.0"/>
+  <testcase name="checkCutRodWhenLengthIs4" classname="cutter.EfficientRodCutterTest" time="0.004"/>
+  <testcase name="checkCutRodWhenLengthIs5" classname="cutter.EfficientRodCutterTest" time="0.0"/>
+  <testcase name="checkCutRodWhenLengthIs6" classname="cutter.EfficientRodCutterTest" time="0.001"/>
+  <testcase name="checkCutRodWhenLengthIs7" classname="cutter.EfficientRodCutterTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
